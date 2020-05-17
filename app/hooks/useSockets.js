@@ -11,7 +11,7 @@ function useSockets() {
 
   useEffect(() => {
 
-    const s = io(`${location.protocol}//${location.hostname}:8080`, {
+    const s = io(`${process.env.SOCKET_SERVER_URL}:8080`, {
       path: '/socket'
     });
 
