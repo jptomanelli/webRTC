@@ -3,20 +3,20 @@ import io from 'socket.io-client';
 
 import useFunctionAsState from './useFunctionAsState';
 
-function useSockets() {
+function useSockets({ socketServerUrl }) {
 
   const [status, setStatus] = useState("disconnected");
   const [socket, setSocket] = useState();
-  const [sendData, setSendData] = useFunctionAsState(() => {});
+  const [sendData, setSendData] = useFunctionAsState(() => { });
 
   useEffect(() => {
 
-    const s = io(`${process.env.SOCKET_SERVER_URL}:8080`, {
+    const s = io(socketServerUrl, {
       path: '/socket'
     });
 
     setSocket(s);
-    
+
     s.on('connect', () => setStatus("connected"));
     s.on('disconnect', () => setStatus('disconnected'));
 
@@ -33,7 +33,7 @@ function useSockets() {
     socketStatus: status,
     sendData
   };
-  
+
 }
 
 export default useSockets;

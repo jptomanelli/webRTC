@@ -8,10 +8,10 @@ import useDevices from '../hooks/useDevices';
 import useSockets from '../hooks/useSockets';
 import useFunctionAsState from '../hooks/useFunctionAsState';
 
-function IndexPage({ config }) {
+function IndexPage({ socketServerUrl, config }) {
 
   const { stream, startStream, endStream, streamStatus } = useDevices();
-  const { socket, socketStatus, sendData } = useSockets();
+  const { socket, socketStatus, sendData } = useSockets({ socketServerUrl });
 
   const [pc, setPc] = useState(null);
   const [remoteStream, setRemoteStream] = useState();
@@ -153,7 +153,12 @@ export async function getServerSideProps() {
     }]
   };
 
-  return { props: { config } };
+  return {
+    props: {
+      config,
+      socketServerUrl: process.env.SOCKET_SERVER_URL
+    }
+  };
 }
 
 export default IndexPage;
