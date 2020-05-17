@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
 import Video from '../components/Video';
-import { Button, Container, CircularProgress, Fade } from '@material-ui/core';
+import { Button, Container, CircularProgress, Fade, Typography, Grid } from '@material-ui/core';
 import io from 'socket.io-client';
 import crypto from 'crypto';
 
 import useDevices from '../hooks/useDevices';
 import useSockets from '../hooks/useSockets';
 import useFunctionAsState from '../hooks/useFunctionAsState';
+import NavBar from '../components/NavBar';
+import Page from '../components/Page';
 
 function IndexPage({ socketServerUrl, config }) {
 
@@ -86,8 +88,7 @@ function IndexPage({ socketServerUrl, config }) {
   }, [pc, sendData]);
 
   return (
-    <Container maxWidth="md">
-      <h1>Welcome</h1>
+    <Page>
       <Fade
         in={false}
         style={{
@@ -97,13 +98,15 @@ function IndexPage({ socketServerUrl, config }) {
       >
         <CircularProgress />
       </Fade>
-      {remoteStream ? (
-        <><p>Remote</p><Video stream={remoteStream} /></>
-      ) : (
-          <>
-            <p>local</p><Video stream={stream} />
-          </>
-        )}
+
+      <Grid container flex>
+        <Grid container item xs={12} md={6}>
+          <Video stream={stream} />
+        </Grid>
+        <Grid container item xs={12} md={6}>
+          <Video stream={remoteStream} />
+        </Grid>
+      </Grid>
 
       <Button
         variant="contained"
@@ -112,7 +115,6 @@ function IndexPage({ socketServerUrl, config }) {
         onClick={streamStatus === 'disconnected' ? startStream : endStream}
       >
         {streamStatus === 'disconnected' ? 'Start Cam' : 'End Cam'}
-
       </Button>
       <Button
         variant="contained"
@@ -121,8 +123,9 @@ function IndexPage({ socketServerUrl, config }) {
       >
         Make Call
       </Button>
-    </Container>
+    </Page>
   );
+
 }
 
 export async function getServerSideProps() {

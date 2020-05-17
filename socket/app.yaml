@@ -6,3 +6,6 @@ manual_scaling:
 
 network:
   session_affinity: true
+
+env_variables:
+  ORIGINS: "web-rtc-bvgk656t5.now.sh,web-rtc.jptomanelli.now.sh,web-rtc-sigma.now.sh,web-rtc-git-master.jptomanelli.now.sh"

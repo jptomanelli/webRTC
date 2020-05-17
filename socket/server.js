@@ -12,6 +12,11 @@ const ioServer = io(socketServer, {
   cookie: false
 });
 
+if (process.env.ORIGINS) {
+  const origins = process.env.ORIGINS.split(',');
+  ioServer.origins(origins);
+}
+
 const room = 'room';
 const connections = {};
 connections[room] = {};

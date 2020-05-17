@@ -7,7 +7,6 @@ function Video({ className, style, stream }) {
 
   useEffect(() => {
     if (videoRef.current && stream) {
-      console.log(stream);
       videoRef.current.srcObject = stream
     }
   }, [videoRef, stream]);
